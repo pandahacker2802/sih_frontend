@@ -57,7 +57,11 @@ export default function Sidebar({ currentTab, onNavigate }) {
     <aside className="fixed left-0 top-0 h-full w-[280px] z-40 bg-surface-container border-r border-outline-variant/30 flex flex-col p-md hidden md:flex">
       {/* Brand Header */}
       <div className="flex items-center gap-sm mb-lg">
-        <Shield className="text-primary w-8 h-8 flex-shrink-0" />
+        <img
+          src="/assets/logo.png"
+          alt="Sovara AI"
+          className="w-8 h-8 flex-shrink-0 object-contain"
+        />
         <div>
           <h1 className="font-display-md text-display-md text-on-surface tracking-tighter leading-none">
             SOVARA AI
