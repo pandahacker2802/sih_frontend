@@ -1,40 +1,100 @@
-import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Header from "./components/static/Header";
+import Sidebar from "./components/static/Sidebar";
 
-// Layout Components
-import Sidebar from './components/static/Sidebar'
-import Header from './components/static/Header'
+// Dashboard
+import Dashboard from "./pages/Dashboard";
+import Workspace from "./pages/AI_Workspace";
+import Tasks from "./pages/Tasks";
+import Knowledge from "./pages/Knowlegde_Hub";
 
-// Page Components
-import Dashboard from './pages/Dashboard'
-import AIWorkspace from './pages/AI_Workspace'
-import Tasks from './pages/Tasks'
-import KnowledgeHub from './pages/Knowlegde_Hub'
-import Documents from './pages/Documents'
-import Deliverables from './pages/Deliverables'
-import Approvals from './pages/Approvals'
-import SecurityCenter from './pages/Security_Center'
+// Other Pages
+import Approvals from "./pages/Approvals";
+import Deliverables from "./pages/Deliverables";
+import Documents from "./pages/Documents";
+import SecurityCenter from "./pages/Security_Center";
 
-export default function App() {
+function App() {
   return (
-    <div className="flex min-h-screen bg-background text-on-surface">
+    <div className="app-shell">
       <Sidebar />
-      <div className="flex flex-col flex-1 ml-[280px]">
+      <div className="app-main">
         <Header />
-        <main className="flex-1 mt-[64px] p-6 overflow-y-auto">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/ai-workspace" element={<AIWorkspace />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/knowledge-hub" element={<KnowledgeHub />} />
-            <Route path="/documents" element={<Documents />} />
-            <Route path="/deliverables" element={<Deliverables />} />
-            <Route path="/approvals" element={<Approvals />} />
-            <Route path="/security-center" element={<SecurityCenter />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
+        <Routes>
+
+        {/* =========================
+            DASHBOARD
+        ========================= */}
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/dashboard/workspace"
+          element={<Workspace />}
+        />
+
+        <Route
+          path="/dashboard/tasks"
+          element={<Tasks />}
+        />
+
+        <Route
+          path="/dashboard/knowledge"
+          element={<Knowledge />}
+        />
+
+
+        {/* =========================
+            OTHER PAGES
+        ========================= */}
+
+        <Route
+          path="/approvals"
+          element={<Approvals />}
+        />
+
+        <Route
+          path="/deliverables"
+          element={<Deliverables />}
+        />
+
+        <Route
+          path="/documents"
+          element={<Documents />}
+        />
+
+        <Route
+          path="/security"
+          element={<SecurityCenter />}
+        />
+
+
+        {/* =========================
+            DEFAULT ROUTE
+        ========================= */}
+
+        <Route
+          path="/"
+          element={<Navigate to="/dashboard" replace />}
+        />
+
+
+        {/* =========================
+            404 / UNKNOWN ROUTE
+        ========================= */}
+
+        <Route
+          path="*"
+          element={<Navigate to="/dashboard" replace />}
+        />
+
+        </Routes>
       </div>
     </div>
-  )
+  );
 }
+
+export default App;
