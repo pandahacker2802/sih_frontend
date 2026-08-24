@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { CheckSquare, FileText, LayoutDashboard, LibraryBig, ListChecks, Plus, Settings, Shield, Sparkles, ClipboardCheck, LockKeyhole } from "lucide-react";
+import { CheckSquare, FileText, LayoutDashboard, LibraryBig, ListChecks, Settings, Shield, Sparkles, ClipboardCheck, LockKeyhole } from "lucide-react";
+import logo from "../../assets/logo.png";
 
 const navItems = [
   {
@@ -70,12 +71,16 @@ function Sidebar() {
 
       {/* Logo / Brand */}
       <div className="brand-block">
-        <div className="brand-row"><span className="brand-mark"><Shield size={19} /></span><div><div className="brand-name">SOVARA AI</div><div className="brand-caption">Sovereign Intelligence</div></div></div>
+        <div className="brand-row">
+          <span className="brand-mark">
+            <img src={logo} alt="SOVARA AI Logo" />
+          </span>
+          <div>
+            <div className="brand-name">SOVARA AI</div>
+            <div className="brand-caption">Sovereign Intelligence</div>
+          </div>
+        </div>
       </div>
-
-      {/* New Workspace */}
-      <button className="workspace-button"><Plus size={17} /> New Workspace
-      </button>
 
       {/* Navigation */}
       <nav className="sidebar-nav">
@@ -93,6 +98,7 @@ function Sidebar() {
               <NavLink
                 key={item.path}
                 to={item.path}
+                end={item.path === "/dashboard"}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }

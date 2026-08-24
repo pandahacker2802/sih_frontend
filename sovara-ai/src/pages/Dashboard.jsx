@@ -1,5 +1,6 @@
 import { Activity, CheckSquare, ClipboardCheck, FileText, LibraryBig, Plus, ShieldCheck, Sparkles, Zap } from "lucide-react";
 
+// Mock data: replace with GET /api/dashboard/metrics.
 const metrics = [
   ["Active Tasks", "24", "Requires attention", CheckSquare],
   ["Knowledge Sources", "551", "+12 this week", LibraryBig],
@@ -7,12 +8,14 @@ const metrics = [
   ["Pending Approvals", "7", "High priority", ClipboardCheck],
 ];
 
+// Mock data: replace with GET /api/activity?limit=3.
 const activity = [
   ["Inspection report analyzed", "2 minutes ago", "success"],
   ["Agent deployed to sector 4", "1 hour ago", "warning"],
   ["Knowledge base sync complete", "3 hours ago", "neutral"],
 ];
 
+// Mock data: replace with GET /api/system/status.
 const statuses = [
   ["AI Runtime", "Healthy", "healthy"],
   ["Knowledge Base", "Healthy", "healthy"],

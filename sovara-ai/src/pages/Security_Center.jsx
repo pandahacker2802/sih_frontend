@@ -1,5 +1,6 @@
 import { Check, Download, Group, History, ShieldCheck } from "lucide-react";
 
+// Mock data: replace with GET /api/security/audit-events.
 const auditEvents = [
   ["14:32:01 UTC", <>Document uploaded:<br />Project_Alpha_Specs.pdf</>, "HASH: 8f4e9a..."],
   ["14:32:05 UTC", "Local embedding generation started."],
@@ -8,6 +9,7 @@ const auditEvents = [
   ["14:35:15 UTC", "Output generated and securely stored.", "active"],
 ];
 
+// Mock data: replace with GET /api/security/access-events.
 const accessRows = [
   ["A. Mercer", "ADMIN", "Today, 14:00", "Policy updated"],
   ["E. Jenson", "ANALYST", "Yesterday, 09:15", "Inference query executed"],

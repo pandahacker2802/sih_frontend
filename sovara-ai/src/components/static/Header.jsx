@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Bell, Plus, Search, Upload, UserRound } from "lucide-react";
+import { Bell, Search, UserRound } from "lucide-react";
 
 function Header() {
   const location = useLocation();
@@ -14,11 +14,11 @@ function Header() {
     "/approvals": "Approvals",
     "/security": "Security Center",
     "/settings": "Settings",
+    "/profile": "Profile",
+    "/notifications": "Notifications",
   };
 
   const currentPage = pageNames[location.pathname] || "Sovara AI";
-  const isDocumentsPage = location.pathname === "/documents";
-
   return (
     <header className="app-header">
 
@@ -43,9 +43,6 @@ function Header() {
       {/* Right Side */}
       <div className="header-actions">
 
-        <button className="header-task-button">{isDocumentsPage ? <Upload size={17} /> : <Plus size={17} />} {isDocumentsPage ? "Upload Documents" : "New Task"}
-        </button>
-
         {/* Divider */}
         <div className="header-divider"></div>
 
@@ -56,10 +53,10 @@ function Header() {
           <button className="header-icon-button" aria-label="Search"><Search size={18} /></button>
 
           {/* Notifications */}
-          <button className="header-icon-button" aria-label="Notifications"><Bell size={18} /></button>
+          <Link className="header-icon-button" to="/notifications" aria-label="Notifications"><Bell size={18} /></Link>
 
           {/* Profile */}
-          <button className="profile-button" aria-label="Profile"><UserRound size={17} /></button>
+          <Link className="profile-button" to="/profile" aria-label="Profile"><UserRound size={17} /></Link>
 
         </div>
       </div>

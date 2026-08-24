@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { BookOpen, Check, FileText, Folder, Paperclip, Send, Wrench, ExternalLink, Database } from "lucide-react";
+import { BookOpen, Check, FileText, Folder, Paperclip, Send, Wrench, ExternalLink, Database, Plus } from "lucide-react";
 
+// Mock data: replace with GET /api/workspaces/:id/documents.
 const documents = ["SOP-17_Safety_Guidelines.pdf", "Inspection_Report_042.pdf"];
+// Mock data: replace with GET /api/knowledge/sources?workspaceId=:id.
 const sources = [
 	["High Relevance", "SOP-17_Safety_Guidelines.pdf", "Section 4.2: Reactive Materials", "primary"],
 	["Context", "Inspection_Report_042.pdf", "Page 3: Sector G Observations", "neutral"],
@@ -14,6 +16,7 @@ function AIWorkspace() {
 	function submitPrompt(event) {
 		event.preventDefault();
 		if (!prompt.trim()) return;
+		// Endpoint hook: POST /api/workspaces/:id/messages with prompt and context.
 		setSentPrompt(prompt.trim());
 		setPrompt("");
 	}
@@ -21,7 +24,7 @@ function AIWorkspace() {
 	return (
 		<main className="workspace-page">
 			<aside className="workspace-context">
-				<div className="workspace-context-heading"><p className="workspace-label">Current context</p><strong>Analyze Inspection Report #042</strong></div>
+				<div className="workspace-context-heading"><div><p className="workspace-label">Current context</p><strong>Analyze Inspection Report #042</strong></div>{/* Endpoint hook: POST /api/workspaces to create a workspace. */}<button className="workspace-new-button" type="button" aria-label="Create new workspace"><Plus size={16} /></button></div>
 				<div className="workspace-context-body">
 					<section className="workspace-side-section"><h2><Folder size={16} /> Attached documents</h2><div className="document-list">{documents.map((document) => <button className="document-item" key={document}><FileText size={18} /><span>{document}</span></button>)}</div></section>
 					<section className="workspace-side-section"><h2><Database size={16} /> Knowledge collections</h2><div className="collection-list"><span>Safety Protocols 2024</span><span>Facility Q3</span></div></section>

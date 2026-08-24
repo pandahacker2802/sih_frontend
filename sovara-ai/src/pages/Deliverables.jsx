@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { CheckCircle2, Download, FileText, Plus, Clock3 } from "lucide-react";
 
+// Mock data: replace with GET /api/deliverables.
 const deliverables = [
   [".docx", "Q3 Security Audit Report", "TSK-8921", "Oct 12, 2023", "approved", "blue"],
   [".xlsx", "Vendor Risk Assessment Matrix", "TSK-9044", "Oct 14, 2023", "pending", "green"],
   [".pdf", "Executive Briefing: Incident Alpha", "TSK-8810", "Oct 10, 2023", "approved", "red"],
 ];
 
+// Mock data: replace with GET /api/documents?status=processed.
 const documents = [
   ["Data Privacy Addendum v2", "Oct 08, 2023", "Sarah Jenkins", "approved"],
   ["Q4 OKR Planning Doc", "Oct 05, 2023", "Mike Chen", "draft"],
