@@ -1,20 +1,5 @@
 import { Check, Download, Group, History, ShieldCheck } from "lucide-react";
-
-// Mock data: replace with GET /api/security/audit-events.
-const auditEvents = [
-  ["14:32:01 UTC", <>Document uploaded:<br />Project_Alpha_Specs.pdf</>, "HASH: 8f4e9a..."],
-  ["14:32:05 UTC", "Local embedding generation started."],
-  ["14:32:45 UTC", "Local embedding complete. Added to Vector DB."],
-  ["14:35:12 UTC", "Inference query executed against Vector DB."],
-  ["14:35:15 UTC", "Output generated and securely stored.", "active"],
-];
-
-// Mock data: replace with GET /api/security/access-events.
-const accessRows = [
-  ["A. Mercer", "ADMIN", "Today, 14:00", "Policy updated"],
-  ["E. Jenson", "ANALYST", "Yesterday, 09:15", "Inference query executed"],
-  ["S. Rossi", "VIEWER", "2 days ago", "Report downloaded"],
-];
+import { securityAccessRows as accessRows, securityAuditEvents as auditEvents } from "../data/mockData";
 
 function SecurityCenter() {
   return (

@@ -1,12 +1,6 @@
 import { useMemo, useState } from "react";
 import { CheckCircle2, ChevronRight, CloudUpload, FileText, Filter, MoreVertical, Play, Search, AlertTriangle, X } from "lucide-react";
-
-const initialDocuments = [
-  ["Q4_Strategic_Briefing_v2.pdf", "PDF", "4.2 MB", "Complete", "COMPLETED", "J. Vance", "pdf", "complete"],
-  ["Project_Titan_Requirements.docx", "DOCX", "1.1 MB", "OCR Extracting", "PENDING", "System", "docx", "processing"],
-  ["Financial_Audit_2023_Final.csv", "CSV", "12.8 MB", "Complete", "INDEXED", "E. Stone", "csv", "complete"],
-  ["Corrupted_Archive_Backup.zip", "ZIP", "450 MB", "Failed", "ERROR", "System", "zip", "error"],
-];
+import { registryDocuments as initialDocuments } from "../data/mockData";
 
 function Documents() {
   const [query, setQuery] = useState("");

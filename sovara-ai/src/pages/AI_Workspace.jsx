@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { BookOpen, Check, FileText, Folder, Paperclip, Send, Wrench, ExternalLink, Database, Plus } from "lucide-react";
-
-// Mock data: replace with GET /api/workspaces/:id/documents.
-const documents = ["SOP-17_Safety_Guidelines.pdf", "Inspection_Report_042.pdf"];
-// Mock data: replace with GET /api/knowledge/sources?workspaceId=:id.
-const sources = [
-	["High Relevance", "SOP-17_Safety_Guidelines.pdf", "Section 4.2: Reactive Materials", "primary"],
-	["Context", "Inspection_Report_042.pdf", "Page 3: Sector G Observations", "neutral"],
-];
+import { workspaceDocuments as documents, workspaceSources as sources } from "../data/mockData";
 
 function AIWorkspace() {
 	const [prompt, setPrompt] = useState("");

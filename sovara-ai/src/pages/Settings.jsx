@@ -1,11 +1,5 @@
-import { Bell, Database, LockKeyhole, Save } from "lucide-react";
-
-// Mock data: replace with GET /api/settings.
-const settings = [
-  ["Local inference", "Keep model execution inside the local enclave", true, LockKeyhole],
-  ["Automatic indexing", "Index newly uploaded documents after processing", true, Database],
-  ["Approval notifications", "Notify reviewers when an item needs attention", true, Bell],
-];
+import { Save } from "lucide-react";
+import { settings } from "../data/mockData";
 
 function Settings() {
   return (

@@ -1,12 +1,5 @@
 import { Mail, ShieldCheck, UserRound } from "lucide-react";
-
-// Mock data: replace with GET /api/me.
-const profile = {
-  name: "Alex Mercer",
-  role: "Workspace Administrator",
-  email: "alex.mercer@sovara.local",
-  organization: "Sovara Industrial Systems",
-};
+import { profile } from "../data/mockData";
 
 function Profile() {
   return (

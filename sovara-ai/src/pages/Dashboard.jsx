@@ -1,28 +1,5 @@
-import { Activity, CheckSquare, ClipboardCheck, FileText, LibraryBig, Plus, ShieldCheck, Sparkles, Zap } from "lucide-react";
-
-// Mock data: replace with GET /api/dashboard/metrics.
-const metrics = [
-  ["Active Tasks", "24", "Requires attention", CheckSquare],
-  ["Knowledge Sources", "551", "+12 this week", LibraryBig],
-  ["Documents Processed", "1,284", "Local enclave", FileText],
-  ["Pending Approvals", "7", "High priority", ClipboardCheck],
-];
-
-// Mock data: replace with GET /api/activity?limit=3.
-const activity = [
-  ["Inspection report analyzed", "2 minutes ago", "success"],
-  ["Agent deployed to sector 4", "1 hour ago", "warning"],
-  ["Knowledge base sync complete", "3 hours ago", "neutral"],
-];
-
-// Mock data: replace with GET /api/system/status.
-const statuses = [
-  ["AI Runtime", "Healthy", "healthy"],
-  ["Knowledge Base", "Healthy", "healthy"],
-  ["Document Engine", "Syncing", "syncing"],
-  ["Agent Runtime", "Healthy", "healthy"],
-  ["Storage (Local)", "Warning", "warning"],
-];
+import { Activity, ClipboardCheck, Plus, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { dashboardActivity as activity, dashboardApprovals, dashboardMetrics as metrics, systemStatuses as statuses } from "../data/mockData";
 
 function Dashboard() {
   return (
@@ -77,8 +54,7 @@ function Dashboard() {
         <article className="panel">
           <div className="panel-heading"><h2>Pending approvals</h2><ClipboardCheck size={18} className="heading-icon" /></div>
           <div className="approval-list">
-            <Approval title="Declassify Q3 Report" detail="Req: M. Vance • 2h ago" />
-            <Approval title="Update Agent Protocol Alpha" detail="Req: System • 5h ago" />
+            {dashboardApprovals.map(([title, detail]) => <Approval title={title} detail={detail} key={title} />)}
           </div>
         </article>
       </section>

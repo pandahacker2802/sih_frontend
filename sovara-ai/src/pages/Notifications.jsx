@@ -1,11 +1,5 @@
-import { Check, ClipboardCheck, FileText, ShieldAlert } from "lucide-react";
-
-// Mock data: replace with GET /api/notifications?unread=true.
-const notifications = [
-  ["Approval requested", "Declassify Q3 Report is waiting for your review.", "12 min ago", ClipboardCheck, true],
-  ["Document processed", "Inspection_Report_042.pdf is ready for analysis.", "1 hour ago", FileText, false],
-  ["Security event", "A new local access policy was applied.", "Yesterday", ShieldAlert, false],
-];
+import { Check } from "lucide-react";
+import { notifications } from "../data/mockData";
 
 function Notifications() {
   return (

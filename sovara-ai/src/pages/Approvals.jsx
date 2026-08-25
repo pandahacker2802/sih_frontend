@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { CheckCircle2, FileText, Sparkles, Thermometer, Verified } from "lucide-react";
-
-// Mock data: replace with GET /api/approvals/:id/sources.
-const sources = [
-  [FileText, "Drone_Scan_Log_7.json", "Micro-fractures detected. Severity: 0.2mm depth. Quadrant B support structures.", "View Source Document"],
-  [Thermometer, "Thermal_Sensor_Array_B.csv", "Delta T of +4.2C observed near coolant valve 3 compared to baseline.", "View Data Visualization"],
-];
+import { CheckCircle2, Sparkles, Verified } from "lucide-react";
+import { approvalSources as sources } from "../data/mockData";
 
 function Approvals() {
   const [action, setAction] = useState("");
