@@ -40,10 +40,13 @@ function Tasks() {
 	const [query, setQuery] = useState("");
 	const [selectedId, setSelectedId] = useState(tasks[0].id);
 	const [taskAction, setTaskAction] = useState("");
+	const [ownerFilter, setOwnerFilter] = useState("all");
+	const [sortOrder, setSortOrder] = useState("created");
+	const [dateFilter, setDateFilter] = useState("all");
 	const filteredTasks = useMemo(() => {
 		const normalizedQuery = query.trim().toLowerCase();
-		return tasks.filter((task) => task.tab === activeTab && `${task.name} ${task.id} ${task.owner}`.toLowerCase().includes(normalizedQuery));
-	}, [activeTab, query]);
+		return tasks.filter((task) => task.tab === activeTab && (ownerFilter === "all" || task.ownerKind === ownerFilter) && (dateFilter === "all" || task.created === dateFilter) && `${task.name} ${task.id} ${task.owner}`.toLowerCase().includes(normalizedQuery)).sort((first, second) => sortOrder === "name" ? first.name.localeCompare(second.name) : second.created.localeCompare(first.created));
+	}, [activeTab, dateFilter, ownerFilter, query, sortOrder]);
 	const tabs = useMemo(() => TAB_DEFS.map((tab) => ({ ...tab, count: tasks.filter((task) => task.tab === tab.key).length })), []);
 	const selectedTask = filteredTasks.find((task) => task.id === selectedId) || filteredTasks[0];
 
@@ -58,19 +61,19 @@ function Tasks() {
 		<main className="tasks-page">
 			<header className="task-header">
 				<div><p className="eyebrow">Operations / Workflows</p><h1>Task Operations</h1><p className="subtitle">Monitor and manage autonomous intelligence gathering and analytical workflows across sovereign data zones.</p></div>
-				<div className="header-actions"><button className="button button-primary" type="button"><Plus size={16} /> New Task</button><button className="button button-secondary" type="button"><Filter size={15} /> Filter</button><button className="button button-secondary" type="button"><ArrowUpDown size={15} /> Sort</button></div>
+				<div className="header-actions"><button className="button button-primary" type="button" onClick={() => setTaskAction("New task creation is ready in this mock workspace.")}><Plus size={16} /> New Task</button><label className="select-control"><Filter size={15} /><span className="sr-only">Filter tasks by owner</span><select value={ownerFilter} onChange={(event) => setOwnerFilter(event.target.value)}><option value="all">All owners</option><option value="agent">Agents</option><option value="system">System</option></select></label><label className="select-control"><ArrowUpDown size={15} /><span className="sr-only">Sort tasks</span><select value={sortOrder} onChange={(event) => setSortOrder(event.target.value)}><option value="created">Newest first</option><option value="name">Name A-Z</option></select></label></div>
 			</header>
 			<nav className="task-tabbar" aria-label="Task status">{tabs.map((tab) => <button key={tab.key} type="button" className={`task-tab${activeTab === tab.key ? " active" : ""}`} onClick={() => selectTab(tab.key)}>{tab.label}<span>({tab.count})</span></button>)}</nav>
 			<div className="tasks-layout">
-				<section className="task-list-panel"><div className="tasks-toolbar"><label className="document-search task-search"><Search size={16} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search task by name, ID, or Owner..." aria-label="Search tasks" /></label><button className="button button-secondary" type="button"><CalendarRange size={15} /> Date Range</button></div><div className="task-list">{filteredTasks.length === 0 ? <p className="empty-documents">No tasks match this view.</p> : filteredTasks.map((task) => <TaskRow task={task} selected={selectedTask?.id === task.id} onSelect={(selectedTaskItem) => { setSelectedId(selectedTaskItem.id); setTaskAction(""); }} key={task.id} />)}</div></section>
+				<section className="task-list-panel"><div className="tasks-toolbar"><label className="document-search task-search"><Search size={16} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search task by name, ID, or Owner..." aria-label="Search tasks" /></label><label className="select-control date-control"><CalendarRange size={15} /><span className="sr-only">Filter tasks by date</span><select value={dateFilter} onChange={(event) => setDateFilter(event.target.value)}><option value="all">All dates</option><option value="2023-10-25">October 25, 2023</option><option value="2023-10-24">October 24, 2023</option><option value="2023-10-20">October 20, 2023</option><option value="2023-10-19">October 19, 2023</option></select></label></div><div className="task-list">{filteredTasks.length === 0 ? <p className="empty-documents">No tasks match this view.</p> : filteredTasks.map((task) => <TaskRow task={task} selected={selectedTask?.id === task.id} onSelect={(selectedTaskItem) => { setSelectedId(selectedTaskItem.id); setTaskAction(""); }} onAction={setTaskAction} key={task.id} />)}</div></section>
 				{selectedTask && <TaskDetail task={selectedTask} action={taskAction} onAction={setTaskAction} />}
 			</div>
 		</main>
 	);
 }
 
-function TaskRow({ task, selected, onSelect }) {
-	return <article className={`task-row${selected ? " selected" : ""}`} onClick={() => onSelect(task)}><div className="task-row-top"><h3>{task.name}</h3><span className={`task-pill ${task.status}`}>{task.statusLabel}</span></div><p className="task-row-desc">{task.description}</p><div className="task-row-meta"><span>Created: {task.created}</span><span>Duration: {task.duration}</span><span>Owner: {task.owner}</span></div><div className="task-row-footer"><div className="task-tools"><OwnerBadge kind={task.ownerKind} />{task.tools.map((tool) => { const Icon = TOOL_ICONS[tool]; return <span className="tool-chip" key={tool}><Icon size={12} /></span>; })}</div><button className="row-menu" aria-label={`Actions for ${task.name}`} onClick={(event) => event.stopPropagation()}><MoreVertical size={16} /></button></div>{task.waiting && <p className="task-waiting">Waiting for resources</p>}</article>;
+function TaskRow({ task, selected, onSelect, onAction }) {
+	return <article className={`task-row${selected ? " selected" : ""}`} onClick={() => onSelect(task)}><div className="task-row-top"><h3>{task.name}</h3><span className={`task-pill ${task.status}`}>{task.statusLabel}</span></div><p className="task-row-desc">{task.description}</p><div className="task-row-meta"><span>Created: {task.created}</span><span>Duration: {task.duration}</span><span>Owner: {task.owner}</span></div><div className="task-row-footer"><div className="task-tools"><OwnerBadge kind={task.ownerKind} />{task.tools.map((tool) => { const Icon = TOOL_ICONS[tool]; return <span className="tool-chip" key={tool}><Icon size={12} /></span>; })}</div><button className="row-menu" type="button" aria-label={`Actions for ${task.name}`} onClick={(event) => { event.stopPropagation(); onAction(`Actions opened for ${task.name}.`); }}><MoreVertical size={16} /></button></div>{task.waiting && <p className="task-waiting">Waiting for resources</p>}</article>;
 }
 
 function OwnerBadge({ kind }) { return <span className={`owner-badge ${kind}`}>{kind === "system" ? <Cpu size={12} /> : <Bot size={12} />}</span>; }

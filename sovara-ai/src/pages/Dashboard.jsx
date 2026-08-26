@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Activity, ClipboardCheck, Plus, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { dashboardActivity as activity, dashboardApprovals, dashboardMetrics as metrics, systemStatuses as statuses } from "../data/mockData";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
   return (
     <main className="dashboard-page">
       <header className="dashboard-header">
@@ -11,8 +14,9 @@ function Dashboard() {
           <p className="subtitle">Your workspace is ready.</p>
         </div>
         <div className="header-actions">
-          <button className="button button-secondary">View Reports</button>
-          <button className="button button-primary"><Plus size={17} /> Quick Action</button>
+          <button className="button button-secondary" type="button" onClick={() => navigate("/deliverables")}>View Reports</button>
+          {/* Backend connection point: POST /api/tasks or /api/workspaces for the selected quick action. */}
+          <button className="button button-primary" type="button" onClick={() => navigate("/dashboard/workspace") }><Plus size={17} /> Quick Action</button>
         </div>
       </header>
 
@@ -63,7 +67,8 @@ function Dashboard() {
 }
 
 function Approval({ title, detail }) {
-  return <div className="approval-row"><div><p>{title}</p><span>{detail}</span></div><button className="review-button">Review</button></div>;
+  const navigate = useNavigate();
+  return <div className="approval-row"><div><p>{title}</p><span>{detail}</span></div><button className="review-button" type="button" onClick={() => navigate("/approvals")}>Review</button></div>;
 }
 
 export default Dashboard;

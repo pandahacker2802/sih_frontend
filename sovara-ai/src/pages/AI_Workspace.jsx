@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BookOpen, Check, FileText, Folder, Paperclip, Send, Wrench, ExternalLink, Database, Plus } from "lucide-react";
 import { workspaceDocuments as documents, workspaceSources as sources } from "../data/mockData";
 
 function AIWorkspace() {
 	const [prompt, setPrompt] = useState("");
 	const [sentPrompt, setSentPrompt] = useState("");
+	const [attachment, setAttachment] = useState("");
+	const [loading, setLoading] = useState(false);
+	const loadingTimer = useRef(null);
 
 	function submitPrompt(event) {
 		event.preventDefault();
@@ -12,14 +15,17 @@ function AIWorkspace() {
 		// Endpoint hook: POST /api/workspaces/:id/messages with prompt and context.
 		setSentPrompt(prompt.trim());
 		setPrompt("");
+		setLoading(true);
+		window.clearTimeout(loadingTimer.current);
+		loadingTimer.current = window.setTimeout(() => setLoading(false), 1400);
 	}
 
 	return (
 		<main className="workspace-page">
 			<aside className="workspace-context">
-				<div className="workspace-context-heading"><div><p className="workspace-label">Current context</p><strong>Analyze Inspection Report #042</strong></div>{/* Endpoint hook: POST /api/workspaces to create a workspace. */}<button className="workspace-new-button" type="button" aria-label="Create new workspace"><Plus size={16} /></button></div>
+				<div className="workspace-context-heading"><div><p className="workspace-label">Current context</p><strong>Analyze Inspection Report #042</strong></div>{/* Backend connection point: POST /api/workspaces to create a workspace. */}<button className="workspace-new-button" type="button" aria-label="Create new workspace" onClick={() => { setPrompt(""); setSentPrompt(""); setAttachment(""); }}><Plus size={16} /></button></div>
 				<div className="workspace-context-body">
-					<section className="workspace-side-section"><h2><Folder size={16} /> Attached documents</h2><div className="document-list">{documents.map((document) => <button className="document-item" key={document}><FileText size={18} /><span>{document}</span></button>)}</div></section>
+					<section className="workspace-side-section"><h2><Folder size={16} /> Attached documents</h2><div className="document-list">{documents.map((document) => <button className="document-item" type="button" onClick={() => setPrompt((current) => `${current}${current ? " " : ""}Analyze ${document}.`)} key={document}><FileText size={18} /><span>{document}</span></button>)}</div></section>
 					<section className="workspace-side-section"><h2><Database size={16} /> Knowledge collections</h2><div className="collection-list"><span>Safety Protocols 2024</span><span>Facility Q3</span></div></section>
 				</div>
 			</aside>
@@ -30,16 +36,16 @@ function AIWorkspace() {
 					<h1>Analysis Session</h1>
 					<div className="user-message">Summarize the safety issues identified in the recent inspection and map them to our current protocols.</div>
 					{sentPrompt && <div className="user-message follow-up">{sentPrompt}</div>}
-					<div className="assistant-message">
-						<p>Based on a review of <button className="inline-reference">Inspection_Report_042.pdf</button>, several key safety deviations were noted, primarily concerning equipment storage and ventilation in Sector G.</p>
-						<p>According to <button className="inline-reference">[SOP-17.pdf §4.2]</button>, “All highly reactive materials must be stored in specialized containment units with active ventilation.” The report indicates that temporary storage units were utilized for a duration exceeding the 48-hour limit.</p>
+					{loading ? <ChatLoading /> : <div className="assistant-message">
+						<p>Based on a review of <button className="inline-reference" type="button" onClick={() => setPrompt("Review Inspection_Report_042.pdf in detail.")}>Inspection_Report_042.pdf</button>, several key safety deviations were noted, primarily concerning equipment storage and ventilation in Sector G.</p>
+						<p>According to <button className="inline-reference" type="button" onClick={() => setPrompt("Explain SOP-17.pdf section 4.2.")}>[SOP-17.pdf §4.2]</button>, “All highly reactive materials must be stored in specialized containment units with active ventilation.” The report indicates that temporary storage units were utilized for a duration exceeding the 48-hour limit.</p>
 						<ul><li><strong>Ventilation Failure:</strong> The secondary extraction fan in Sector G was operating at 40% capacity.</li><li><strong>Storage Protocol Breach:</strong> Reactive compounds remained in transit staging for 72 hours.</li></ul>
 						<p>I can draft an incident response memo outlining immediate corrective actions if needed.</p>
-					</div>
+					</div>}
 				</div>
 				<form className="workspace-composer" onSubmit={submitPrompt}>
-					<textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Direct the analysis..." rows="3" />
-					<div className="composer-toolbar"><div><button type="button"><Paperclip size={15} /> Attach</button><button type="button"><BookOpen size={15} /> Knowledge</button><button type="button"><Wrench size={15} /> Tools</button></div><button className="send-button" type="submit" aria-label="Send prompt"><Send size={17} /></button></div>
+					<textarea value={prompt} disabled={loading} onChange={(event) => setPrompt(event.target.value)} placeholder={loading ? "Sovara is reviewing the evidence..." : "Direct the analysis..."} rows="3" />
+					<div className="composer-toolbar"><div><label className="composer-tool-button"><input type="file" disabled={loading} hidden onChange={(event) => setAttachment(event.target.files?.[0]?.name || "")} /><Paperclip size={15} /> {attachment || "Attach"}</label><button type="button" disabled={loading} onClick={() => setPrompt((current) => `${current}${current ? " " : ""}Use the relevant knowledge collections.`)}><BookOpen size={15} /> Knowledge</button><button type="button" disabled={loading} onClick={() => setPrompt((current) => `${current}${current ? " " : ""}Use available analysis tools.`)}><Wrench size={15} /> Tools</button></div><button className="send-button" disabled={loading} type="submit" aria-label="Send prompt"><Send size={17} /></button></div>
 				</form>
 			</section>
 
@@ -50,6 +56,10 @@ function AIWorkspace() {
 			</aside>
 		</main>
 	);
+}
+
+function ChatLoading() {
+	return <div className="assistant-message chat-loading" role="status" aria-label="Sovara is generating a response"><div className="loading-label"><span className="jiggling-dots"><i /><i /><i /></span><span>Sovara is thinking</span></div><div className="skeleton-lines" aria-hidden="true"><i /><i /><i className="short" /></div></div>;
 }
 
 function TraceItem({ text, done, active }) {

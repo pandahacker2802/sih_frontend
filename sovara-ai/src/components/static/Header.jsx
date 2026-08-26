@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Bell, Search, UserRound } from "lucide-react";
+import { Bell, UserRound } from "lucide-react";
 
 function Header() {
   const location = useLocation();
@@ -48,9 +48,6 @@ function Header() {
 
         {/* Actions */}
         <div className="header-icon-actions">
-
-          {/* Search */}
-          <button className="header-icon-button" aria-label="Search"><Search size={18} /></button>
 
           {/* Notifications */}
           <Link className="header-icon-button" to="/notifications" aria-label="Notifications"><Bell size={18} /></Link>

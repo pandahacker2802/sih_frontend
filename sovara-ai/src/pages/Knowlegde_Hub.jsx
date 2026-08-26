@@ -16,6 +16,8 @@ const activity = [
 
 function KnowledgeHub() {
 	const [query, setQuery] = useState("");
+	const [created, setCreated] = useState(false);
+	const [openedCollection, setOpenedCollection] = useState("");
 	const filteredCollections = useMemo(() => collections.filter((collection) => `${collection.name} ${collection.description}`.toLowerCase().includes(query.toLowerCase())), [query]);
 
 	return (
@@ -26,8 +28,11 @@ function KnowledgeHub() {
 					<h1>Knowledge Hub</h1>
 					<p className="subtitle">Organize the sources your sovereign AI can trust.</p>
 				</div>
-				<button className="button button-primary" type="button"><Plus size={17} /> New collection</button>
+				{/* Backend connection point: POST /api/knowledge/collections. */}
+				<button className="button button-primary" type="button" onClick={() => setCreated(true)}><Plus size={17} /> New collection</button>
 			</header>
+			{created && <div className="export-feedback" role="status">New collection form is ready in this mock workspace.</div>}
+			{openedCollection && <div className="export-feedback" role="status">{openedCollection} collection opened.</div>}
 
 			<section className="knowledge-toolbar" aria-label="Knowledge tools">
 				<div className="knowledge-search"><Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search collections or descriptions..." aria-label="Search collections" /></div>
@@ -38,7 +43,7 @@ function KnowledgeHub() {
 				<section className="collection-section">
 					<div className="section-heading"><div><p className="eyebrow">Workspace library</p><h2>Collections</h2></div><span>{filteredCollections.length} available</span></div>
 					<div className="collection-grid">
-						{filteredCollections.map((collection) => <CollectionCard collection={collection} key={collection.name} />)}
+						{filteredCollections.map((collection) => <CollectionCard collection={collection} onOpen={setOpenedCollection} key={collection.name} />)}
 					</div>
 					{filteredCollections.length === 0 && <p className="knowledge-empty">No collections match your search.</p>}
 				</section>
@@ -57,8 +62,8 @@ function KnowledgeHub() {
 	);
 }
 
-function CollectionCard({ collection }) {
-	return <article className="collection-card"><div className={`collection-icon ${collection.tone}`}><FolderOpen size={21} /></div><div className="collection-card-body"><div className="collection-card-title"><h3>{collection.name}</h3><button type="button" aria-label={`Open ${collection.name}`}><FileText size={16} /></button></div><p>{collection.description}</p><div className="collection-meta"><span><Database size={14} /> {collection.sources} sources</span><time>{collection.updated}</time></div></div></article>;
+function CollectionCard({ collection, onOpen }) {
+	return <article className="collection-card"><div className={`collection-icon ${collection.tone}`}><FolderOpen size={21} /></div><div className="collection-card-body"><div className="collection-card-title"><h3>{collection.name}</h3><button type="button" aria-label={`Open ${collection.name}`} onClick={() => onOpen(collection.name)}><FileText size={16} /></button></div><p>{collection.description}</p><div className="collection-meta"><span><Database size={14} /> {collection.sources} sources</span><time>{collection.updated}</time></div></div></article>;
 }
 
 export default KnowledgeHub;

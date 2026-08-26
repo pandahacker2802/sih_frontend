@@ -13,7 +13,8 @@ function Deliverables() {
     <main className="deliverables-page">
       <header className="deliverables-header">
         <div><p className="workspace-label">Outputs / Archive</p><h1>Deliverables</h1><p>Generated artifacts and final outputs ready for external distribution or archival.</p></div>
-        <button className="button button-primary"><Plus size={17} /> Generate Deliverable</button>
+        {/* Backend connection point: POST /api/deliverables/generate. */}
+        <button className="button button-primary" type="button" onClick={() => setExported("Deliverable generation queued.")}><Plus size={17} /> Generate Deliverable</button>
       </header>
       {exported && <div className="export-feedback" role="status">{exported}</div>}
       <section>
