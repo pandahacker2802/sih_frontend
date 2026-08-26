@@ -2238,6 +2238,308 @@ h2 span {
     font-size: 12px;
 }
 
+.knowledge-page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 56px 32px 72px;
+}
+
+.knowledge-header,
+.knowledge-toolbar,
+.section-heading,
+.collection-card-title,
+.collection-meta,
+.index-health,
+.health-stat {
+    display: flex;
+    align-items: center;
+}
+
+.knowledge-header,
+.knowledge-toolbar,
+.section-heading {
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.knowledge-header {
+    align-items: flex-end;
+    margin-bottom: 32px;
+}
+
+.knowledge-header h1 {
+    margin-bottom: 8px;
+}
+
+.knowledge-toolbar {
+    border-top: 1px solid #2e2926;
+    border-bottom: 1px solid #2e2926;
+    padding: 16px 0;
+    margin-bottom: 28px;
+}
+
+.knowledge-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(560px, 100%);
+    border: 1px solid #554338;
+    border-radius: 4px;
+    background: #1c1815;
+    padding: 11px 13px;
+    color: #a99589;
+}
+
+.knowledge-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #eae1db;
+    font: 12px Inter, sans-serif;
+}
+
+.knowledge-search input::placeholder {
+    color: #8f7768;
+}
+
+.knowledge-total {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a99589;
+    font: 11px 'JetBrains Mono', monospace;
+}
+
+.knowledge-total svg {
+    color: #ffb784;
+}
+
+.knowledge-total strong {
+    color: #eae1db;
+    font-size: 16px;
+}
+
+.knowledge-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 310px;
+    gap: 28px;
+}
+
+.section-heading {
+    align-items: flex-end;
+    margin-bottom: 16px;
+}
+
+.section-heading .eyebrow {
+    margin-bottom: 7px;
+}
+
+.section-heading h2,
+.knowledge-panel h2 {
+    margin: 0;
+    color: #eae1db;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.section-heading>span {
+    color: #a99589;
+    font: 10px 'JetBrains Mono', monospace;
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.collection-card,
+.knowledge-panel {
+    border: 1px solid #2e2926;
+    border-radius: 4px;
+    background: #1c1815;
+}
+
+.collection-card {
+    display: flex;
+    gap: 15px;
+    min-height: 182px;
+    padding: 19px;
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.collection-card:hover {
+    border-color: #805e49;
+    transform: translateY(-2px);
+}
+
+.collection-icon {
+    display: grid;
+    flex: 0 0 40px;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+}
+
+.collection-icon.orange { background: rgba(217, 122, 44, .16); color: #ffb784; }
+.collection-icon.teal { background: rgba(77, 157, 143, .16); color: #7bd0bd; }
+.collection-icon.blue { background: rgba(87, 139, 190, .16); color: #8bb8e8; }
+.collection-icon.plum { background: rgba(157, 105, 139, .16); color: #d29abb; }
+
+.collection-card-body {
+    min-width: 0;
+    flex: 1;
+}
+
+.collection-card-title {
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.collection-card h3 {
+    margin: 0;
+    color: #eae1db;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.collection-card-title button {
+    display: grid;
+    flex: 0 0 28px;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #554338;
+    border-radius: 4px;
+    background: transparent;
+    color: #a99589;
+}
+
+.collection-card-title button:hover { color: #ffb784; border-color: #d97a2c; }
+
+.collection-card p {
+    min-height: 40px;
+    margin: 12px 0 20px;
+    color: #a99589;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.collection-meta {
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px;
+    color: #dbc2b2;
+    font: 10px 'JetBrains Mono', monospace;
+}
+
+.collection-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ffb784;
+}
+
+.collection-meta time {
+    color: #8f7768;
+    text-align: right;
+}
+
+.knowledge-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.knowledge-panel {
+    padding: 20px;
+}
+
+.knowledge-panel .panel-heading {
+    margin-bottom: 22px;
+}
+
+.index-health {
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.health-ring {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    border: 5px solid #d97a2c;
+    border-left-color: #554338;
+    border-radius: 50%;
+    color: #ffb784;
+    font: 11px 'JetBrains Mono', monospace;
+}
+
+.index-health strong {
+    color: #eae1db;
+    font-size: 14px;
+}
+
+.index-health p {
+    margin: 5px 0 0;
+    color: #a99589;
+    font: 10px 'JetBrains Mono', monospace;
+}
+
+.health-stat {
+    justify-content: space-between;
+    border-top: 1px solid #2e2926;
+    padding: 11px 0 0;
+    margin-top: 11px;
+    color: #a99589;
+    font: 10px 'JetBrains Mono', monospace;
+}
+
+.health-stat b { color: #eae1db; font-weight: 400; }
+
+.knowledge-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.knowledge-activity li {
+    display: flex;
+    gap: 10px;
+}
+
+.knowledge-activity li>div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.knowledge-activity strong { color: #eae1db; font-size: 11px; font-weight: 500; }
+.knowledge-activity span:not(.activity-dot), .knowledge-activity time { color: #a99589; font: 10px 'JetBrains Mono', monospace; }
+.knowledge-activity time { color: #8f7768; }
+
+.knowledge-empty { color: #a99589; font: 11px 'JetBrains Mono', monospace; }
+
+@media (max-width: 900px) {
+    .knowledge-layout { grid-template-columns: 1fr; }
+    .knowledge-sidebar { display: grid; grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .knowledge-page { padding: 32px 18px 48px; }
+    .knowledge-header { align-items: flex-start; flex-direction: column; }
+    .knowledge-toolbar { align-items: stretch; flex-direction: column; }
+    .knowledge-search { width: 100%; }
+    .collection-grid, .knowledge-sidebar { grid-template-columns: 1fr; }
+    .collection-card { min-height: 0; }
+}
+
 .audit-log>div>span::before {
     position: absolute;
     top: 3px;
